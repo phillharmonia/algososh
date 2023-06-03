@@ -1,10 +1,90 @@
-import React from "react";
+import React, { useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
+import { Input } from "../ui/input/input";
+import { Button } from "../ui/button/button";
+import styles from './queue-page.module.css'
+import { Circle } from "../ui/circle/circle";
+import { SHORT_DELAY_IN_MS, delay } from "../../constants/delays";
+import { Queue } from "./Queue";
+import { ElementStates } from "../../types/element-states";
 
 export const QueuePage: React.FC = () => {
+  const [queue] = useState(() => new Queue<string>(7));
+  const [inputValue, setInputValue] = useState<string>('');
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [array, setArray] = useState<(string | undefined)[]>(Array(7).fill(""));
+  const [tail, setTail] = useState<number>(queue.tail)
+  const [head, setHead] = useState<number>(queue.head)
+
+  const handleAdd = async() => {
+    if(inputValue !== '') {
+      const newItem = inputValue
+      queue.enqueue(newItem)
+      setInputValue("")
+      const newArray = [...queue.container]
+      setArray(newArray)
+      setTail(queue.tail)
+      setHighlightedIndex(tail % queue.getSize())
+      await delay(SHORT_DELAY_IN_MS)
+      setHighlightedIndex(-1)
+      await delay(SHORT_DELAY_IN_MS)
+    }
+  }
+  const handleRemove = async() => {
+    queue.dequeue();
+    const newArray = [...queue.container]
+    setArray(newArray)
+    setHighlightedIndex(head % queue.getSize())
+    await delay(SHORT_DELAY_IN_MS)
+    setHead(queue.head)
+    setHighlightedIndex(-1)
+    await delay(SHORT_DELAY_IN_MS)
+  }
+
+  const handleClear = () => {
+    if (!queue.isEmpty()) {
+    queue.clear();
+    setArray([...queue.container]);
+    setTail(queue.tail);
+    setHead(queue.head);
+    setHighlightedIndex(-1);
+    }
+  }
+
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+  
+
   return (
     <SolutionLayout title="Очередь">
-
+ <form className={styles.form}>
+        <div className={styles.controls}>
+          <Input
+            placeholder="Введите значение"
+            maxLength={4}
+            isLimitText={true}
+            value={inputValue}
+            onChange={handleChangeInput}
+          />
+          <Button text="Добавить" onClick={() => handleAdd()} />
+          <Button text="Удалить" onClick={() => handleRemove()} />
+        </div>
+        <Button text="Очистить" onClick={() => handleClear()}  />
+      </form>
+      <div className={styles.visual}>
+      {array.map((item, index) => {
+          return (
+            <Circle
+              key={index}
+              letter={item}
+              index={index}
+              head={!queue.isEmpty() && index === head ? "head" : null}
+              tail={(index === tail - 1 && !queue.isEmpty()) ? "tail" : ""}
+              state={index === highlightedIndex ? ElementStates.Changing : ElementStates.Default}
+            />)
+        })}
+      </div>
     </SolutionLayout>
   );
 };

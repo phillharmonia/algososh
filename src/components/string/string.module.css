@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin: 0 auto;
+    width: 567px;
+}
+
+.visual {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: center;
+    margin: 120px 0 0;
+}
