@@ -13,11 +13,14 @@ export const QueuePage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [array, setArray] = useState<(string | undefined)[]>(Array(7).fill(""));
-  const [tail, setTail] = useState<number>(queue.tail)
-  const [head, setHead] = useState<number>(queue.head)
+  const [tail, setTail] = useState<number>(queue.tail);
+  const [head, setHead] = useState<number>(queue.head);
+  const [isLoadingAdd, setIsLoadingAdd] = useState<boolean>(false);
+  const [isLoadingRemove, setIsLoadingRemove] = useState<boolean>(false);
 
   const handleAdd = async() => {
     if(inputValue !== '') {
+      setIsLoadingAdd(true)
       const newItem = inputValue
       queue.enqueue(newItem)
       setInputValue("")
@@ -27,10 +30,12 @@ export const QueuePage: React.FC = () => {
       setHighlightedIndex(tail % queue.getSize())
       await delay(SHORT_DELAY_IN_MS)
       setHighlightedIndex(-1)
+      setIsLoadingAdd(false)
       await delay(SHORT_DELAY_IN_MS)
     }
   }
   const handleRemove = async() => {
+    setIsLoadingRemove(true)
     queue.dequeue();
     const newArray = [...queue.container]
     setArray(newArray)
@@ -38,6 +43,7 @@ export const QueuePage: React.FC = () => {
     await delay(SHORT_DELAY_IN_MS)
     setHead(queue.head)
     setHighlightedIndex(-1)
+    setIsLoadingRemove(false)
     await delay(SHORT_DELAY_IN_MS)
   }
 
@@ -54,11 +60,14 @@ export const QueuePage: React.FC = () => {
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
   
 
   return (
     <SolutionLayout title="Очередь">
- <form className={styles.form}>
+ <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.controls}>
           <Input
             placeholder="Введите значение"
@@ -67,10 +76,10 @@ export const QueuePage: React.FC = () => {
             value={inputValue}
             onChange={handleChangeInput}
           />
-          <Button text="Добавить" onClick={() => handleAdd()} />
-          <Button text="Удалить" onClick={() => handleRemove()} />
+          <Button text="Добавить" onClick={handleAdd} isLoader={isLoadingAdd} disabled={!inputValue || queue.length === 7} />
+          <Button text="Удалить" onClick={handleRemove} isLoader={isLoadingRemove} disabled={queue.isEmpty()} />
         </div>
-        <Button text="Очистить" onClick={() => handleClear()}  />
+        <Button text="Очистить" onClick={handleClear} disabled={queue.isEmpty()} />
       </form>
       <div className={styles.visual}>
       {array.map((item, index) => {

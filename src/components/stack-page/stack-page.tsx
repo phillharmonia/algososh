@@ -12,10 +12,13 @@ export const StackPage: React.FC = () => {
   const [stack, setStack] = useState<Stack<number>>(new Stack<number>());
   const [inputValue, setInputValue] = useState("");
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [isLoadingAdd, setIsLoadingAdd] = useState<boolean>(false);
+  const [isLoadingRemove, setIsLoadingRemove] = useState<boolean>(false);
 
 
   const handleAdd = async() => {
     if (inputValue !== "") {
+      setIsLoadingAdd(true)
       const newItem = Number(inputValue);
       await delay(SHORT_DELAY_IN_MS)
       stack.push(newItem);
@@ -23,10 +26,16 @@ export const StackPage: React.FC = () => {
       setHighlightedIndex(stack.getSize() - 1);
       await delay(SHORT_DELAY_IN_MS)
       setHighlightedIndex(-1);
+      setIsLoadingAdd(false);
     }
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
   const handleRemove = async() => {
+    setIsLoadingRemove(true);
     const removedItem = stack.peek();
     if (removedItem !== undefined) {
       setHighlightedIndex(stack.getSize() - 1);
@@ -34,6 +43,7 @@ export const StackPage: React.FC = () => {
       stack.pop();
       setHighlightedIndex(-1);
     }
+    setIsLoadingRemove(false);
   };
 
   
@@ -49,7 +59,7 @@ export const StackPage: React.FC = () => {
 
   return (
     <SolutionLayout title="Стек">
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.controls}>
           <Input
             placeholder="Введите значение"
@@ -58,8 +68,8 @@ export const StackPage: React.FC = () => {
             onChange={handleChangeInput}
             isLimitText={true}
           />
-          <Button text="Добавить" disabled={inputValue === "" || stack.getSize() === 8} onClick={handleAdd} />
-          <Button text="Удалить" disabled={stack.getSize() === 0} onClick={handleRemove} />
+          <Button text="Добавить" disabled={inputValue === "" || stack.getSize() === 8} onClick={handleAdd} isLoader={isLoadingAdd} />
+          <Button text="Удалить" disabled={stack.getSize() === 0} onClick={handleRemove} isLoader={isLoadingRemove} />
         </div>
         <Button text="Очистить" disabled={stack.getSize() === 0} onClick={handleClear} />
       </form>

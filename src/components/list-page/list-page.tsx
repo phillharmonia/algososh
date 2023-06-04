@@ -28,6 +28,9 @@ export const ListPage: React.FC = () => {
   const handleChangeInputIndex = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputIndex(+event.target.value);
   }
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
 
   const handlePrepend: FormEventHandler = async (e) => {
     e.preventDefault();
@@ -174,7 +177,7 @@ export const ListPage: React.FC = () => {
   return (
     <SolutionLayout title="Связный список">
       <div className={styles.forms}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <Input
             extraClass={styles.input}
             placeholder="Введите значение"
@@ -214,7 +217,7 @@ export const ListPage: React.FC = () => {
             />
           </div>
         </form>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <Input
             extraClass={styles.input}
             placeholder="Введите индекс"

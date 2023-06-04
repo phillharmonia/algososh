@@ -12,7 +12,7 @@ export class Queue<T> implements IQueue<T> {
     head = 0;
     tail = 0;
     private readonly size: number = 0;
-    private length: number = 0;
+    length: number = 0;
 
     constructor(size: number) {
         this.size = size;

@@ -12,11 +12,12 @@ export const StringComponent: FC = () => {
   const [visual, setVisual] = useState<string[]>([]);
   const [firstIndex, setFirstIndex] = useState<number>(-1);
   const [lastIndex, setLastIndex] = useState<number>(-1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const reverseInput = async () => {
+    setIsLoading(true);
     const dataArray = inputValue.split("");
     const dataLength = dataArray.length;
-
     for (let i = 0; i < Math.floor(dataLength / 2); i++) {
       setFirstIndex(i);
       setLastIndex(dataLength - 1 - i);
@@ -29,6 +30,7 @@ export const StringComponent: FC = () => {
     }
     setFirstIndex(-1);
     setLastIndex(-1);
+    setIsLoading(false);
   };
 
   const getElementState = (index: number): ElementStates => {
@@ -62,7 +64,7 @@ export const StringComponent: FC = () => {
             setInputValue(e.target.value)
           }
         />
-        <Button text="Развернуть" type="submit" />
+        <Button text="Развернуть" isLoader={isLoading} type="submit" disabled={!inputValue} />
       </form>
       <div className={styles.visual}>
         {visual.map((letter, index) => (
