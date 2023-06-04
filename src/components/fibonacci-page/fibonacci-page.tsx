@@ -51,9 +51,8 @@ export const FibonacciPage = () => {
           value={inputValue}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setInputValue(e.target.value)}
-          min={1}
           max={19}
-          maxLength={19}
+          maxLength={2}
           isLimitText={true}
         />
         <Button text="Рассчитать" type="submit" disabled={inputValue === "" || parseInt(inputValue) > 19 || parseInt(inputValue) <= 0} isLoader={isLoading} />
