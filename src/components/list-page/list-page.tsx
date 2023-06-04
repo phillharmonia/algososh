@@ -202,7 +202,7 @@ export const ListPage: React.FC = () => {
             <Button
               text="Удалить из head"
               disabled={
-                setVisual.length === 0 || animation !== null
+                visual.length === 0 || animation !== null
               }
               isLoader={animation === "deleteOldHead"}
               onClick={handleDeleteHead}
@@ -210,7 +210,7 @@ export const ListPage: React.FC = () => {
             <Button
               text="Удалить из tail"
               disabled={
-                setVisual.length === 0 || animation !== null
+                visual.length === 0 || animation !== null
               }
               isLoader={animation === "deleteOldTail"}
               onClick={handleDeleteTail}
@@ -230,9 +230,8 @@ export const ListPage: React.FC = () => {
               text="Добавить по индексу"
               disabled={
                 inputIndex <= -1 ||
-                !inputValue ||
                 animation !== null ||
-                inputIndex > setVisual.length
+                inputIndex > visual.length
               }
               isLoader={animation === "addNewIndex"}
               onClick={handleAddIndex}
