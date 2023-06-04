@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -21,8 +20,7 @@ export const FibonacciPage = () => {
     }
     return sequence;
   };
-  
-  
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const n = parseInt((event.currentTarget.elements[0] as HTMLInputElement).value);
@@ -35,14 +33,15 @@ export const FibonacciPage = () => {
         await delay(SHORT_DELAY_IN_MS);
       }
       setIsLoading(false);
+    } else {
     }
   };
-  
 
   useEffect(() => {
     setInputValue("");
     setDataForVisual([]);
   }, []);
+
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
@@ -52,12 +51,12 @@ export const FibonacciPage = () => {
           value={inputValue}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setInputValue(e.target.value)}
-            min={1}
-            max={19}
-            maxLength={19}
-            isLimitText={true}
+          min={1}
+          max={19}
+          maxLength={19}
+          isLimitText={true}
         />
-        <Button text="Рассчитать" type="submit" isLoader={isLoading} />
+        <Button text="Рассчитать" type="submit" disabled={inputValue === "" || parseInt(inputValue) > 19 || parseInt(inputValue) <= 0} isLoader={isLoading} />
       </form>
       <div className={styles.visual}>
         {dataForVisual.map((number, index) => (
@@ -67,4 +66,3 @@ export const FibonacciPage = () => {
     </SolutionLayout>
   );
 };
-
