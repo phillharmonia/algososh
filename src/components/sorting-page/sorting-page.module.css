@@ -1,0 +1,33 @@
+.form {
+    display: flex;
+    flex-direction: row;
+    max-width: 980px;
+    justify-content: center;
+    margin: 0 auto;
+}
+.radio {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    margin: 0;
+    margin-right: 52px;
+    align-items: center;
+}
+.sorting_buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin: 0;
+    margin-right: 80px;
+}
+.array {
+    max-width: 1240px;
+    gap: 16px;
+    width: 100%;
+    padding: 0;
+    margin: 48px auto 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+}
