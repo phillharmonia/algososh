@@ -45,7 +45,7 @@ export const FibonacciPage = () => {
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit} data-cypress='form'>
         <Input
           type="number"
           value={inputValue}
@@ -54,10 +54,11 @@ export const FibonacciPage = () => {
           max={19}
           maxLength={2}
           isLimitText={true}
+          data-cypress="input"
         />
-        <Button text="Рассчитать" type="submit" disabled={inputValue === "" || parseInt(inputValue) > 19 || parseInt(inputValue) <= 0} isLoader={isLoading} />
+        <Button data-cypress="button_add" text="Рассчитать" type="submit" disabled={inputValue === "" || parseInt(inputValue) > 19 || parseInt(inputValue) <= 0} isLoader={isLoading} />
       </form>
-      <div className={styles.visual}>
+      <div className={styles.visual} data-cypress='visual'>
         {dataForVisual.map((number, index) => (
           <Circle index={index} key={index} letter={number.toString()} />
         ))}

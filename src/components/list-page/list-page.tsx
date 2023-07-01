@@ -142,6 +142,7 @@ export const ListPage: React.FC = () => {
     setInputValue("");
     setInputIndex(-1);
     setAnimation(null);
+    setNewItem(null);
   }
   };
 
@@ -177,7 +178,7 @@ export const ListPage: React.FC = () => {
   return (
     <SolutionLayout title="Связный список">
       <div className={styles.forms}>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit} data-cypress="form">
           <Input
             extraClass={styles.input}
             placeholder="Введите значение"
@@ -185,6 +186,7 @@ export const ListPage: React.FC = () => {
             value={inputValue}
             isLimitText={true}
             onChange={handleChangeInput}
+            data-cypress="input"
           />
           <div className={styles.button_container}>
             <Button
@@ -192,12 +194,14 @@ export const ListPage: React.FC = () => {
               disabled={!inputValue || animation !== null}
               isLoader={animation === "prepend"}
               onClick={handlePrepend}
+              data-cypress="button_add_head"
             />
             <Button
               text="Добавить в tail"
               disabled={!inputValue ||animation !== null}
               isLoader={animation === "append"}
               onClick={handleAppend}
+              data-cypress="button_add_tail"
             />
             <Button
               text="Удалить из head"
@@ -206,6 +210,7 @@ export const ListPage: React.FC = () => {
               }
               isLoader={animation === "deleteOldHead"}
               onClick={handleDeleteHead}
+              data-cypress="button_delete_head"
             />
             <Button
               text="Удалить из tail"
@@ -214,16 +219,18 @@ export const ListPage: React.FC = () => {
               }
               isLoader={animation === "deleteOldTail"}
               onClick={handleDeleteTail}
+              data-cypress="button_delete_tail"
             />
           </div>
         </form>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit} data-cypress="form_index">
           <Input
             extraClass={styles.input}
             placeholder="Введите индекс"
             value={inputIndex === -1 ? "" : inputIndex}
             type="number"
             onChange={handleChangeInputIndex}
+            data-cypress="input_index"
           />
           <div className={styles.button_container}>
             <Button
@@ -235,6 +242,7 @@ export const ListPage: React.FC = () => {
               }
               isLoader={animation === "addNewIndex"}
               onClick={handleAddIndex}
+              data-cypress="button_add_index"
             />
             <Button
               text="Удалить по индексу"
@@ -246,11 +254,12 @@ export const ListPage: React.FC = () => {
               }
               isLoader={animation === "deleteOldIndex"}
               onClick={handleDeleteIndex}
+              data-cypress="button_delete_index"
             />
           </div>
         </form>
       </div>
-      <div className={styles.visual}>
+      <div className={styles.visual} data-cypress="visual">
         {visual.map((value, index) => (
           <div key={index} className={styles.visual_arrow}>
             <Circle

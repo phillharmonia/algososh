@@ -55,7 +55,7 @@ export const StringComponent: FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <form className={styles.form} onSubmit={submitHandler}>
+      <form className={styles.form} onSubmit={submitHandler} data-cypress='form'>
         <Input
           maxLength={11}
           isLimitText={true}
@@ -63,10 +63,11 @@ export const StringComponent: FC = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setInputValue(e.target.value)
           }
+          data-cypress="input"
         />
-        <Button text="Развернуть" isLoader={isLoading} type="submit" disabled={!inputValue} />
+        <Button text="Развернуть" isLoader={isLoading} type="submit" disabled={!inputValue} data-cypress="button_add" />
       </form>
-      <div className={styles.visual}>
+      <div className={styles.visual} data-cypress='visual'>
         {visual.map((letter, index) => (
           <Circle
             key={index}

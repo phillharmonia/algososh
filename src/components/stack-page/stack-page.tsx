@@ -59,7 +59,7 @@ export const StackPage: React.FC = () => {
 
   return (
     <SolutionLayout title="Стек">
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}  data-cypress='form'>
         <div className={styles.controls}>
           <Input
             placeholder="Введите значение"
@@ -67,13 +67,14 @@ export const StackPage: React.FC = () => {
             value={inputValue}
             onChange={handleChangeInput}
             isLimitText={true}
+            data-cypress="input"
           />
-          <Button text="Добавить" disabled={inputValue === "" || stack.getSize() === 8} onClick={handleAdd} isLoader={isLoadingAdd} />
-          <Button text="Удалить" disabled={stack.getSize() === 0} onClick={handleRemove} isLoader={isLoadingRemove} />
+          <Button text="Добавить" disabled={inputValue === "" || stack.getSize() === 8} onClick={handleAdd} isLoader={isLoadingAdd} data-cypress="button_add" />
+          <Button text="Удалить" disabled={stack.getSize() === 0} onClick={handleRemove} isLoader={isLoadingRemove} data-cypress="button_remove" />
         </div>
-        <Button text="Очистить" disabled={stack.getSize() === 0} onClick={handleClear} />
+        <Button text="Очистить" disabled={stack.getSize() === 0} onClick={handleClear} data-cypress="button_clear" />
       </form>
-      <div className={styles.visual}>
+      <div className={styles.visual} data-cypress='visual'>
         {stack.getElements().map((item, index) => (
           <Circle
           key={index}
