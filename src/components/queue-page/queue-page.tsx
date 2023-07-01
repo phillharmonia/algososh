@@ -67,7 +67,7 @@ export const QueuePage: React.FC = () => {
 
   return (
     <SolutionLayout title="Очередь">
- <form className={styles.form} onSubmit={handleSubmit}>
+ <form className={styles.form} onSubmit={handleSubmit} data-cypress='form'>
         <div className={styles.controls}>
           <Input
             placeholder="Введите значение"
@@ -75,13 +75,14 @@ export const QueuePage: React.FC = () => {
             isLimitText={true}
             value={inputValue}
             onChange={handleChangeInput}
+            data-cypress="input"
           />
-          <Button text="Добавить" onClick={handleAdd} isLoader={isLoadingAdd} disabled={!inputValue || queue.length === 7} />
-          <Button text="Удалить" onClick={handleRemove} isLoader={isLoadingRemove} disabled={queue.isEmpty()} />
+          <Button text="Добавить" onClick={handleAdd} isLoader={isLoadingAdd} disabled={!inputValue || queue.length === 7} data-cypress="button_add" />
+          <Button text="Удалить" onClick={handleRemove} isLoader={isLoadingRemove} disabled={queue.isEmpty()} data-cypress="button_remove" />
         </div>
-        <Button text="Очистить" onClick={handleClear} disabled={queue.isEmpty()} />
+        <Button text="Очистить" onClick={handleClear} disabled={queue.isEmpty()} data-cypress="button_clear" />
       </form>
-      <div className={styles.visual}>
+      <div className={styles.visual} data-cypress='visual'>
       {array.map((item, index) => {
           return (
             <Circle

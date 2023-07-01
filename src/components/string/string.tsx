@@ -6,6 +6,7 @@ import styles from "./string.module.css";
 import { ElementStates } from "../../types/element-states";
 import { DELAY_IN_MS, delay } from "../../constants/delays";
 import { Input } from "../ui/input/input";
+import { reverseString } from "./utills";
 
 export const StringComponent: FC = () => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -16,7 +17,8 @@ export const StringComponent: FC = () => {
 
   const reverseInput = async () => {
     setIsLoading(true);
-    const dataArray = inputValue.split("");
+    const reversedString = reverseString(inputValue);
+    const dataArray = reversedString.split("");
     const dataLength = dataArray.length;
     for (let i = 0; i < Math.floor(dataLength / 2); i++) {
       setFirstIndex(i);
@@ -47,7 +49,8 @@ export const StringComponent: FC = () => {
     e.preventDefault();
     const trimmedValue = inputValue.trim();
     if (trimmedValue) {
-      const dataArray = trimmedValue.split("");
+      const reversedString = reverseString(trimmedValue);
+      const dataArray = reversedString.split("");
       setVisual([...dataArray]);
       reverseInput();
     }
@@ -55,7 +58,7 @@ export const StringComponent: FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <form className={styles.form} onSubmit={submitHandler}>
+      <form className={styles.form} onSubmit={submitHandler} data-cypress='form'>
         <Input
           maxLength={11}
           isLimitText={true}
@@ -63,10 +66,11 @@ export const StringComponent: FC = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setInputValue(e.target.value)
           }
+          data-cypress="input"
         />
-        <Button text="Развернуть" isLoader={isLoading} type="submit" disabled={!inputValue} />
+        <Button text="Развернуть" isLoader={isLoading} type="submit" disabled={!inputValue} data-cypress="button_add" />
       </form>
-      <div className={styles.visual}>
+      <div className={styles.visual} data-cypress='visual'>
         {visual.map((letter, index) => (
           <Circle
             key={index}
