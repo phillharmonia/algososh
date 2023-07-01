@@ -79,22 +79,19 @@ class LinkedListNode<T> {
     }
   
     deleteByIndex(index: number) {
-      if (index < 0 || index > this.size) {
-        return;
-      } else if (this.head === null || index === 0) {
-        this.deleteHead();
-      } else {
-        let previous = this.head;
-        while (
-          index - 1 !== 0 &&
-          previous.next !== null &&
-          previous.next.next !== null
-        ) {
-          previous = previous.next;
-        }
-        previous.next = previous.next!.next;
-      }
-      this.size--;
+      if(index >= this.size){
+        return
+    }
+    if(index === 0){
+        this.deleteHead()
+        return
+    }
+    let curr = this.head
+    for(let i = 1; i < index; i++){
+        curr= curr!.next
+    }
+    curr!.next = curr!.next!.next
+    this.size--
     }
   
     deleteHead() {

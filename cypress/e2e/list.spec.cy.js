@@ -254,16 +254,13 @@ describe('Работа связного списка', () => {
             cy.tick(SHORT_DELAY_IN_MS);
             cy.get(cypressCircle).eq(3).should('have.css', 'border', cypressDefaultColor).and('have.text', '1234');
         })
-        cy.get(cypressForm).within(() => {
-            cy.get(cypressInput).type('1234')
-            cy.get(cypressButtonAddHead).should('not.be.disabled');
-            cy.get(cypressButtonAddTail).should('not.be.disabled');
-            cy.get(cypressButtonDeleteHead).should('not.be.disabled');
-            cy.get(cypressButtonDeleteTail).should('not.be.disabled');
-        })
         cy.get(cypressFormByIndex).within(() => {
             cy.get(cypressInputIndex).type('3');
+            cy.get(cypressButtonAddByIndex).should('not.be.disabled');
+            cy.get(cypressButtonDeleteByIndex).should('not.be.disabled');
             cy.get(cypressButtonDeleteByIndex).click();
+            cy.get(cypressButtonAddByIndex).should('be.disabled');
+            cy.get(cypressButtonDeleteByIndex).should('be.disabled');
         })
         cy.get(cypressVisual).within(() => {
             cy.tick();
@@ -287,6 +284,7 @@ describe('Работа связного списка', () => {
             cy.get(cypressCircle).eq(3).should('have.css', 'border', cypressDefaultColor);
             cy.get(cypressCircleSmall).should('have.css', 'border', cypressChangingColor);
             cy.tick(SHORT_DELAY_IN_MS);
+            cy.get(cypressCircle).eq(3).should('have.css', 'border', cypressDefaultColor).and('not.have.text', '1234')
         })
     })
 
