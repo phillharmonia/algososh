@@ -6,6 +6,7 @@ import styles from "./string.module.css";
 import { ElementStates } from "../../types/element-states";
 import { DELAY_IN_MS, delay } from "../../constants/delays";
 import { Input } from "../ui/input/input";
+import { reverseString } from "./utills";
 
 export const StringComponent: FC = () => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -16,7 +17,8 @@ export const StringComponent: FC = () => {
 
   const reverseInput = async () => {
     setIsLoading(true);
-    const dataArray = inputValue.split("");
+    const reversedString = reverseString(inputValue);
+    const dataArray = reversedString.split("");
     const dataLength = dataArray.length;
     for (let i = 0; i < Math.floor(dataLength / 2); i++) {
       setFirstIndex(i);
@@ -47,7 +49,8 @@ export const StringComponent: FC = () => {
     e.preventDefault();
     const trimmedValue = inputValue.trim();
     if (trimmedValue) {
-      const dataArray = trimmedValue.split("");
+      const reversedString = reverseString(trimmedValue);
+      const dataArray = reversedString.split("");
       setVisual([...dataArray]);
       reverseInput();
     }
